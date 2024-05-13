@@ -27,7 +27,7 @@ class Produit
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?fournisseur $fournisseur = null;
+    private ?Fournisseur $fournisseur = null;
 
     /**
      * @var Collection<int, Stock>
@@ -81,12 +81,12 @@ class Produit
         return $this;
     }
 
-    public function getFournisseur(): ?fournisseur
+    public function getFournisseur(): ?Fournisseur
     {
         return $this->fournisseur;
     }
 
-    public function setFournisseur(?fournisseur $fournisseur): static
+    public function setFournisseur(?Fournisseur $fournisseur): static
     {
         $this->fournisseur = $fournisseur;
 
