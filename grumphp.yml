@@ -6,18 +6,10 @@ parameters:
     tasks:
         phpunit:
             config_file: ./phpunit.xml.dist
-        phpcsfixer2:
-            config_file: .php_cs
         phplint: ~
         phpcs:
             standard: PSR2
         phpstan:
-            config_file: phpstan.neon
             level: max
 
 
-
-# Define additional paths to watch
-git:
-    hook_path: .git/hooks/grumphp
-    commit_msg_regexp: /^(?=\W*\w).*$/
