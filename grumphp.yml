@@ -1,0 +1,15 @@
+# grumphp.yml
+
+parameters:
+    git_dir: .
+    bin_dir: ./vendor/bin
+    tasks:
+        phpunit:
+            config_file: ./phpunit.xml.dist
+        phplint: ~
+        phpcs:
+            standard: PSR2
+        phpstan:
+            level: max
+
+
