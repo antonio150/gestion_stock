@@ -1,13 +1,47 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/pipeline/#customization
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
-stages:
-- test
-sast:
-  stage: test
+image: jakzal/phpqa:php8.2
+
+cache:
+  paths: 
+    - vendor/
+
+.before_script: &before_script
+    before_script:
+        - composer install
+
 include:
-- template: Security/SAST.gitlab-ci.yml
+    - template: Jobs/Secret-Detection.gitlab-ci.yml
+    - template: Jobs/SAST.gitlab-ci.yml
+
+# SecurityChecker stage
+security-checker:
+    stage: SecurityChecker
+    script:
+        - local-php-security-checker composer.lock
+    allow_failure: false
+
+# PHP Coding Standards
+php-code-standard:
+    <<: *before_script
+    stage: CodingStandards
+    script:
+        - php-cs-fixer fix ./src --dry-run --rules=@Symfony --verbose
+        - phpstan analyse ./src -l3
+        - phpdd ./src
+        - phpcpd ./src --exclude './src/Controller/Admin/' --exclude './src/Entity'
+    allow_failure: true
+
+# PHP Lint
+lint:
+    <<: *before_script
+    stage: Lint
+    script:
+        - ./bin/console lint:twig templates --env=prod
+        - ./bin/console lint:yaml config --parse-tags
+        - ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+    allow_failure:  true
+
+stages:
+    - test
+    - SecurityChecker
+    - CodingStandards
+    - Lint

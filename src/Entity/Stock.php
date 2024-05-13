@@ -16,9 +16,9 @@ class Stock
     private ?int $id = null;
 
     /**
-     * @var Collection<int, produit>
+     * @var Collection<int, Produit>
      */
-    #[ORM\ManyToMany(targetEntity: produit::class, inversedBy: 'stocks')]
+    #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'stocks')]
     private Collection $produit;
 
     #[ORM\Column]
@@ -38,14 +38,14 @@ class Stock
     }
 
     /**
-     * @return Collection<int, produit>
+     * @return Collection<int, Produit>
      */
     public function getProduit(): Collection
     {
         return $this->produit;
     }
 
-    public function addProduit(produit $produit): static
+    public function addProduit(Produit $produit): static
     {
         if (!$this->produit->contains($produit)) {
             $this->produit->add($produit);
@@ -54,7 +54,7 @@ class Stock
         return $this;
     }
 
-    public function removeProduit(produit $produit): static
+    public function removeProduit(Produit $produit): static
     {
         $this->produit->removeElement($produit);
 
