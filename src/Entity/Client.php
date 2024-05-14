@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use App\Validator\Constraints as AppAssert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
@@ -14,6 +15,7 @@ class Client
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[AppAssert\FirstLetterMajuscule]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]

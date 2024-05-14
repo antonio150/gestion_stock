@@ -21,6 +21,9 @@ class Commande
     #[ORM\ManyToMany(targetEntity: Produit::class)]
     private Collection $produit;
 
+    #[ORM\Column]
+    private ?int $quantiteCommande = null;
+
     public function __construct()
     {
         $this->produit = new ArrayCollection();
@@ -51,6 +54,18 @@ class Commande
     public function removeProduit(Produit $produit): static
     {
         $this->produit->removeElement($produit);
+
+        return $this;
+    }
+
+    public function getQuantiteCommande(): ?int
+    {
+        return $this->quantiteCommande;
+    }
+
+    public function setQuantiteCommande(int $quantiteCommande): static
+    {
+        $this->quantiteCommande = $quantiteCommande;
 
         return $this;
     }
