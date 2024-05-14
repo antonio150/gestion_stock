@@ -15,7 +15,7 @@ class Client
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[AppAssert\FirstLetterMajuscule]
+    #[AppAssert\FirstLetterMajuscule('groups={"registration"}')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
