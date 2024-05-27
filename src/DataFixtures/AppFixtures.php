@@ -11,13 +11,15 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $client = new Client();
-        $faker = Factory::create();
-        $client->setNom('dada');
-        $client->setPrenom('sasa');
-        $client->setAdresse('tanan');
+        // $faker = Factory::create();
+        for ($i = 0; $i < 10; ++$i) {
+            $client = new Client();
+            $client->setNom('Sasa'.$i);
+            $client->setPrenom('Derz'.$i);
+            $client->setAdresse('QAR'.$i);
 
-        $manager->persist($client);
-        $manager->flush();
+            $manager->persist($client);
+            $manager->flush();
+        }
     }
 }

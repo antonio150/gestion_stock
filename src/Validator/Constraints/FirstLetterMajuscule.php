@@ -16,4 +16,6 @@ class FirstLetterMajuscule extends Constraint
      * Then, use these in your validator class.
      */
     public string $message = 'The value "{{ value }}" must start with capital.';
+
+
 }
