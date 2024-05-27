@@ -21,8 +21,8 @@ class ClientRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT * FROM client';
         $stmt = $conn->prepare($sql);
-        $v= $stmt->executeQuery();
-    $a = $v->fetchAllAssociative();
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
 
         return $a;
     }

@@ -15,16 +15,16 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                'attr'=>['class'=>'form-control'],
+                'attr' => ['class' => 'form-control'],
             ])
-            ->add('prenom', TextType::class,[
-                'attr'=>['class'=>'form-control']
+            ->add('prenom', TextType::class, [
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('adresse', TextType::class, [
-                'attr'=>['class'=>'form-control']
+                'attr' => ['class' => 'form-control'],
             ])
-            ->add('save', SubmitType::class,[
-                'attr'=>['class' => 'btn btn-primary']
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary'],
             ])
         ;
     }
