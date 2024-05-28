@@ -60,9 +60,12 @@ class ClientController extends AbstractController
     }
 
     #[Route('/edit_client/{id}', name: 'edit_client', methods: ['POST', 'GET'])]
-    public function editClient(Client $client, Request $request,
-        EntityManagerInterface $entityManagerInterface, ValidatorInterface $validatorInterface): Response
-    {
+    public function editClient(
+        Client $client,
+        Request $request,
+        EntityManagerInterface $entityManagerInterface,
+        ValidatorInterface $validatorInterface
+    ): Response {
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
         $route = [

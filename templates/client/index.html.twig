@@ -8,33 +8,39 @@
 
 	<div class="container mt-5">
 
-		<a href="{{path('ajout_client')}}" type="button" class="btn btn-primary" >
+		<a href="{{path('ajout_client')}}" type="button" class="btn btn-primary">
 			Ajout client
-</a>
+		</a>
 
-		
+
 	</div>
-	<div>
-		</th </div> <table class="table"> <thead> <tr> <th scope="col">>
-			<th scope="col">Nom</th>
-			<th scope="col">Prénom</th>
-			<th scope="col">Adresse</th>
-		<th scope="col">Action</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for items in listeClient %}
+
+	<table class="table">
+		<thead>
 			<tr>
-				<th scope="row">{{items.id}}</th>
-				<td>{{items.nom}}</td>
-				<td>{{items.prenom}}</td>
-				<td>{{items.adresse}}</td>
-				<td><a href="{{path('delete_client', {id:items.id})}}" class="btn btn-alert">Supprimer</a>
-				<a href="{{path('edit_client', {id:items.id})}}" class="btn btn-success">Modifier</a></td>
-				
+				<th scope="col">></th>
+				<th scope="col">Nom</th>
+				<th scope="col">Prénom</th>
+				<th scope="col">Adresse</th>
+				<th scope="col">Action</th>
 			</tr>
-		{% endfor %}
+		</thead>
+		<tbody>
+			{% for items in listeClient %}
+				<tr>
+					<th scope="row">{{items.id}}</th>
+					<td>{{items.nom}}</td>
+					<td>{{items.prenom}}</td>
+					<td>{{items.adresse}}</td>
+					<td>
+						<a href="{{path('delete_client', {id:items.id})}}" class="btn btn-alert">Supprimer</a>
+						<a href="{{path('edit_client', {id:items.id})}}" class="btn btn-success">Modifier</a>
+					</td>
+
+				</tr>
+			{% endfor %}
 
 
-	</tbody>
-</table>{% endblock %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -16,6 +16,17 @@ class FournisseurRepository extends ServiceEntityRepository
         parent::__construct($registry, Fournisseur::class);
     }
 
+
+    public function getAll()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM fournisseur';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+        return $a;
+    }
+
     //    /**
     //     * @return Fournisseur[] Returns an array of Fournisseur objects
     //     */
