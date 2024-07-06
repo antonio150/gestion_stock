@@ -98,6 +98,7 @@ class ClientController extends AbstractController
     {
         $manager->remove($client);
         $manager->flush();
+
         return $this->redirectToRoute('app_client');
     }
 }

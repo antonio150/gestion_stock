@@ -7,7 +7,7 @@ use App\Validator\Constraints as AppAssert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[ORM\Table(name: "client", indexes: [new ORM\Index(name: "search_idx", columns: ["nom", "prenom", "adresse"])])]
+#[ORM\Table(name: 'client', indexes: [new ORM\Index(name: 'search_idx', columns: ['nom', 'prenom', 'adresse'])])]
 class Client
 {
     #[ORM\Id]
@@ -15,14 +15,14 @@ class Client
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: "string" ,length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
     #[AppAssert\FirstLetterMajuscule]
     private ?string $nom = null;
 
-    #[ORM\Column(type: "string" ,length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: "string" ,length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $adresse = null;
 
     public function getId(): ?int

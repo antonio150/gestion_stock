@@ -2,11 +2,14 @@
 
 namespace App\Service;
 
-use App\Repository\ClientRepository;
+use App\Entity\Fournisseur;
 use App\Repository\FournisseurRepository;
 
 class FournisseurService
 {
+    /**
+     * @var FournisseurRepository
+     */
     private $fournisseurRepository;
 
     public function __construct(FournisseurRepository $fournisseurRepository)
@@ -14,7 +17,10 @@ class FournisseurService
         $this->fournisseurRepository = $fournisseurRepository;
     }
 
-    public function getAllFournisseur()
+    /**
+     * @return Fournisseur[]
+     */
+    public function getAllFournisseur(): array
     {
         return $this->fournisseurRepository->getAll();
     }

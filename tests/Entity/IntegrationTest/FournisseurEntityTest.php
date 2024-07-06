@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class FournisseurEntityTest extends TestCase
 {
-    public function testGetAllClient()
+    public function testGetAllFournisseur()
     {
         $mockRepository = $this->createMock(FournisseurRepository::class);
         $mockRepository->expects($this->any())

@@ -2,10 +2,14 @@
 
 namespace App\Service;
 
+use App\Entity\Client;
 use App\Repository\ClientRepository;
 
 class ClientService
 {
+    /**
+     * @var ClientRepository
+     */
     private $clientRepository;
 
     public function __construct(ClientRepository $clientRepository)
@@ -13,13 +17,11 @@ class ClientService
         $this->clientRepository = $clientRepository;
     }
 
-    public function getAllClient()
+    /**
+     * @return Client[]
+     */
+    public function getAllClient(): array
     {
         return $this->clientRepository->findAll();
-    }
-
-    public function getClientById($id)
-    {
-        return $this->clientRepository->findOneById($id);
     }
 }

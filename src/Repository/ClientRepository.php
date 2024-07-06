@@ -16,7 +16,10 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
-    public function getAll()
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getAll(): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT * FROM client';

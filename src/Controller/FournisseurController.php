@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Fournisseur;
 use App\Form\FournisseurType;
 use App\Repository\FournisseurRepository;
@@ -22,7 +21,7 @@ class FournisseurController extends AbstractController
 
         return $this->render('fournisseur/index.html.twig', [
             'controller_name' => 'FournisseurController',
-            'fournisseur' => $fournisseur
+            'fournisseur' => $fournisseur,
         ]);
     }
 
@@ -37,9 +36,9 @@ class FournisseurController extends AbstractController
         $form->handleRequest($request);
         $errors = null;
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManagerInterface->persist($fournisseur);
             $entityManagerInterface->flush();
+
             return $this->redirectToRoute('app_fournisseur');
         }
 
@@ -53,22 +52,22 @@ class FournisseurController extends AbstractController
         Fournisseur $fournisseur,
         Request $request,
         EntityManagerInterface $entityManagerInterface
-    ) {
+    ): Response {
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
         $route = [
-            'id' => $fournisseur->getId()
+            'id' => $fournisseur->getId(),
         ];
         if ($form->isSubmitted() && $form->isValid()) {
             $form->getData();
             $entityManagerInterface->persist($fournisseur);
             $entityManagerInterface->flush();
+
             return $this->redirectToRoute('app_fournisseur');
         }
 
         return $this->render('fournisseur/edit.html.twig', [
             'form' => $form->createView(),
-
         ]);
     }
 
@@ -76,9 +75,10 @@ class FournisseurController extends AbstractController
     public function deleteFournisseur(
         Fournisseur $fournisseur,
         EntityManagerInterface $entityManagerInterface
-    ) {
+    ): Response {
         $entityManagerInterface->remove($fournisseur);
         $entityManagerInterface->flush();
+
         return $this->redirectToRoute('app_fournisseur');
     }
 }

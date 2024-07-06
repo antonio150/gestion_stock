@@ -12,7 +12,7 @@ class FournisseurControllerTest extends WebTestCase
         $crawler = $fournisseur->request('GET', '/fournisseur/ajout');
 
         $form = $crawler->selectButton('Submit')->form([
-            'fournisseur[nom]' => 'value',
+            'fournisseur[nom]' => 1,
             'fournisseur[type]' => 'value',
             'fournisseur[adresse]' => 'value',
         ]);
