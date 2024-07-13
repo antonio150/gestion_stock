@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Fournisseur;
 use App\Entity\Produit;
-use App\Entity\Stock;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -22,11 +21,11 @@ class ProduitType extends AbstractType
             ->add('nom', TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('description', TextareaType::class,[
-                'attr'=>['class'=>'form-control'],
+            ->add('description', TextareaType::class, [
+                'attr' => ['class' => 'form-control'],
             ])
-            ->add('prixUnit', NumberType::class,[
-                'attr' => ['class'=> 'form-control'],
+            ->add('prixUnit', NumberType::class, [
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('fournisseur', EntityType::class, [
                 'class' => Fournisseur::class,

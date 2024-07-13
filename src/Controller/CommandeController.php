@@ -6,7 +6,6 @@ use App\Entity\Commande;
 use App\Entity\Stock;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
-use App\Repository\FournisseurRepository;
 use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,6 +51,7 @@ class CommandeController extends AbstractController
             $qte = $qteStock - $qteCommandProd;
 
             $stockRepository->updateQuantite($idProduit, $qte);
+
             return $this->redirectToRoute('app_commande');
         }
 
@@ -96,7 +96,6 @@ class CommandeController extends AbstractController
         EntityManagerInterface $entityManagerInterface,
         StockRepository $stockRepository
     ) {
-
         $quantiteCommandeProduit = $commande->getQuantiteCommande();
         $produit = $commande->getProduit();
         $idProduit = $produit->getId();
@@ -111,11 +110,10 @@ class CommandeController extends AbstractController
             $qte = $qteStock + $qteCommandProd;
 
             $stockRepository->updateQuantite($idProduit, $qte);
-        }else{
+        } else {
             $errorMessage = "Produit n'existe pas dans stock";
             $this->addFlash('error', $errorMessage);
         }
-
 
         return $this->redirectToRoute('app_commande');
     }

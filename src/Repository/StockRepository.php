@@ -28,7 +28,6 @@ class StockRepository extends ServiceEntityRepository
         return $a;
     }
 
-
     public function updateQuantite($idProduit, $qteStock)
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -38,7 +37,7 @@ class StockRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($sql);
         $v = $stmt->executeQuery([
             'qteStock' => $qteStock,
-            'produit_id' => $idProduit
+            'produit_id' => $idProduit,
         ]);
     }
 

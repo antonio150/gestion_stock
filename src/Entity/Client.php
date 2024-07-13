@@ -30,7 +30,6 @@ class Client
         return (string) $this->nom;
     }
 
-
     public function getId(): ?int
     {
         return $this->id;

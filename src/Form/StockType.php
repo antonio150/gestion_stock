@@ -22,14 +22,14 @@ class StockType extends AbstractType
                 'choice_label' => 'nom',
             ])
             ->add('quantiteStock', IntegerType::class, [
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('emplacement', TextType::class, [
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
             ])
 
             ->add('save', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-success']
+                'attr' => ['class' => 'btn btn-success'],
             ]);
     }
 

@@ -18,6 +18,7 @@ class StockController extends AbstractController
         StockRepository $stockRepository
     ): Response {
         $stock = $stockRepository->findAll();
+
         return $this->render('stock/index.html.twig', [
             'listestock' => $stock,
         ]);
@@ -37,6 +38,7 @@ class StockController extends AbstractController
 
             return $this->redirectToRoute('app_stock');
         }
+
         return $this->render('stock/ajout.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -56,6 +58,7 @@ class StockController extends AbstractController
 
             return $this->redirectToRoute('app_stock');
         }
+
         return $this->render('stock/edit.html.twig', [
             'form' => $form->createView(),
         ]);

@@ -12,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class CommandeRepository extends ServiceEntityRepository
 {
     private $connection;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Commande::class);
@@ -43,8 +44,6 @@ class CommandeRepository extends ServiceEntityRepository
 
         return $a;
     }
-
-    
 
     //    /**
     //     * @return Commande[] Returns an array of Commande objects

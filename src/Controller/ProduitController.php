@@ -17,6 +17,7 @@ class ProduitController extends AbstractController
     public function index(ProduitRepository $produitRepository): Response
     {
         $listeProduit = $produitRepository->findAll();
+
         //  dd($listeProduit);
         return $this->render('produit/index.html.twig', [
             'listeProduit' => $listeProduit,
@@ -27,7 +28,6 @@ class ProduitController extends AbstractController
     public function addProduit(
         Request $request,
         EntityManagerInterface $entityManagerInterface,
-
     ): Response {
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
@@ -35,11 +35,12 @@ class ProduitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManagerInterface->persist($produit);
             $entityManagerInterface->flush();
+
             return $this->redirectToRoute('app_produit');
         }
 
         return $this->render('produit/ajout.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -54,11 +55,12 @@ class ProduitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManagerInterface->persist($produit);
             $entityManagerInterface->flush();
+
             return $this->redirectToRoute('app_produit');
         }
 
         return $this->render('produit/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -69,6 +71,7 @@ class ProduitController extends AbstractController
     ) {
         $entityManagerInterface->remove($produit);
         $entityManagerInterface->flush();
+
         return $this->redirectToRoute('app_produit');
     }
 }
