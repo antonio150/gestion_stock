@@ -1,40 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout client
+{% block title %}produit
 {% endblock %}
 
 {% block body %}
 
+	<div>
+		<a class="btn btn-primary" href="{{path('ajout_commande')}}">Ajout commande</a>
+	</div>
 
-	<div class="container mt-5">
+	{% for message in app.flashes('error') %}
+		<div class="alert alert-danger">
+			{{ message }}
+		</div>
+	{% endfor %}
 
-		<a href="{{path('ajout_client')}}" type="button" class="btn btn-primary">
-			Ajout commande
-		</a>
-
-
+	<div>
+		<button class="btn btn-success">Cherche</button>
+		<input type="text">
 	</div>
 
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col"></th>
-				<th scope="col">Nom</th>
-				<th scope="col">Prénom</th>
-				<th scope="col">Adresse</th>
+
+				<th scope="col">Quantité</th>
+				<th scope="col">Client</th>
+				<th scope="col">Produit</th>
+
 				<th scope="col">Action</th>
 			</tr>
 		</thead>
 		<tbody>
-			{% for items in listeClient %}
+			{% for items in commande %}
 				<tr>
-					<th scope="row">{{items.id}}</th>
-					<td>{{items.nom}}</td>
-					<td>{{items.prenom}}</td>
-					<td>{{items.adresse}}</td>
+
+					<td>{{items.quantiteCommande}}</td>
+					<td>{{items.idClient}}</td>
+					<td>{{items.Produit.nom}}</td>
+
 					<td>
-						<a href="{{path('delete_client', {id:items.id})}}" class="btn btn-alert">Supprimer</a>
-						<a href="{{path('edit_client', {id:items.id})}}" class="btn btn-success">Modifier</a>
+						<a href="{{path('delete_commande', {id:items.id})}}" class="btn btn-alert">Supprimer</a>
+						<a href="{{path('edit_commande', {id:items.id})}}" class="btn btn-success">Modifier</a>
 					</td>
 
 				</tr>

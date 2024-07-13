@@ -25,6 +25,12 @@ class Client
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $adresse = null;
 
+    public function __toString()
+    {
+        return (string) $this->nom;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

@@ -16,6 +16,32 @@ class StockRepository extends ServiceEntityRepository
         parent::__construct($registry, Stock::class);
     }
 
+    public function getQuantite($idProduit)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM stock WHERE 
+        stock.produit_id = :produitId';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery(['produitId' => $idProduit]);
+        $a = $v->fetchAssociative();
+
+        return $a;
+    }
+
+
+    public function updateQuantite($idProduit, $qteStock)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'UPDATE stock set 
+        stock.quantite_stock = :qteStock
+        WHERE stock.produit_id=:produit_id';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery([
+            'qteStock' => $qteStock,
+            'produit_id' => $idProduit
+        ]);
+    }
+
     //    /**
     //     * @return Stock[] Returns an array of Stock objects
     //     */

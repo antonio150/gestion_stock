@@ -22,11 +22,11 @@ class Commande
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?client $idClient = null;
+    private ?Client $idClient = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?produit $Produit = null;
+    private ?Produit $Produit = null;
 
   
 
@@ -50,29 +50,36 @@ class Commande
         return $this;
     }
 
-    public function getIdClient(): ?client
+    public function getIdClient(): ?Client
     {
         return $this->idClient;
     }
 
-    public function setIdClient(?client $idClient): static
+    public function setIdClient(?Client $idClient): static
     {
         $this->idClient = $idClient;
 
         return $this;
     }
 
-    public function getProduit(): ?produit
+    public function getProduit(): ?Produit
     {
         return $this->Produit;
     }
 
-    public function setProduit(?produit $Produit): static
+    public function setProduit(?Produit $Produit): static
     {
         $this->Produit = $Produit;
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return (string) $this->getProduit();
+    }
+
+    
 
    
 }
