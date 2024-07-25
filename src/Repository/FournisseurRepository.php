@@ -27,6 +27,18 @@ class FournisseurRepository extends ServiceEntityRepository
         return $a;
     }
 
+    public function findFournisseur($value)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM fournisseur WHERE
+         fournisseur.nom like "%'.$value.'%"';
+         $stmt = $conn->prepare($sql);
+         $v = $stmt->executeQuery();
+         $a = $v->fetchAllAssociative();
+
+         return $a;
+    }
+
     //    /**
     //     * @return Fournisseur[] Returns an array of Fournisseur objects
     //     */

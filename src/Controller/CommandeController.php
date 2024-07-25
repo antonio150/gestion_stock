@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\Stock;
 use App\Form\CommandeType;
+use App\Form\SearchCommandeFormType;
 use App\Repository\CommandeRepository;
 use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,14 +16,37 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CommandeController extends AbstractController
 {
-    #[Route('/commande', name: 'app_commande', methods: ['GET'])]
+    #[Route('/commande', name: 'app_commande', methods: ['GET', 'POST'])]
     public function index(
-        CommandeRepository $commandeRepository
+        CommandeRepository $commandeRepository,
+        Request $request
     ): Response {
-        $commande = $commandeRepository->findAll();
+
+
+        $formRecherche = $this->createForm(SearchCommandeFormType::class);
+        $formRecherche->handleRequest($request);
+       
+        $commande = $commandeRepository->findAllCommande();
+        if ($formRecherche->isSubmitted()) {
+            $data = $formRecherche->getData();
+            //  dd($data["produit"]);
+            $route = [
+                'nomProduit' => $data["produit"],
+            ];
+            
+            return $this->redirectToRoute('app_commande', $route);
+        }
+
+        if(isset($_GET['nomProduit']))
+        {
+            $commande = $commandeRepository->findProduitInStock($_GET['nomProduit']);
+        }
+        $req = require("../templates/navbar/menu.html.twig");
 
         return $this->render('commande/index.html.twig', [
             'commande' => $commande,
+            'require' => $req,
+            'form' => $formRecherche,
         ]);
     }
 
@@ -55,6 +79,8 @@ class CommandeController extends AbstractController
             return $this->redirectToRoute('app_commande');
         }
 
+
+
         return $this->render('commande/ajout.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -68,14 +94,41 @@ class CommandeController extends AbstractController
     public function editCommande(
         Commande $commande,
         Request $request,
+        StockRepository $stockRepository,
         EntityManagerInterface $entityManagerInterface
     ): Response {
+        $qteCommandeAvant = $commande->getQuantiteCommande();
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $form->getData();
+
+            $qteCommandeApres = $commande->getQuantiteCommande();
+            $qteCommandeApres = intval($qteCommandeApres);
+            $qteCommandeAvant = intval($qteCommandeAvant);
+            $qteCommandeVerification = $qteCommandeApres - $qteCommandeAvant;
+            $produit = $commande->getProduit();
+            $idProduit = $produit->getId();
+            $stockQte = $stockRepository->getQuantite($idProduit);
+            $stockQte = intval($stockQte['quantite_stock']);
+            // dump($qteCommandeAvant);
+            // dd($qteCommandeVerification);
+            // dump($qteCommandeApres);
+            // dd($stockQte);
+            if ($qteCommandeVerification > 0) {
+                $qte =  $stockQte - $qteCommandeVerification;
+
+                $stockRepository->updateQuantite($idProduit, $qte);
+            } else if ($qteCommandeVerification < 0) {
+                $qte = $stockQte - $qteCommandeVerification;
+
+                $stockRepository->updateQuantite($idProduit, $qte);
+            }
             $entityManagerInterface->persist($commande);
             $entityManagerInterface->flush();
+
+
 
             return $this->redirectToRoute('app_commande');
         }

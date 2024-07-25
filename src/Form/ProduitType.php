@@ -29,7 +29,7 @@ class ProduitType extends AbstractType
             ])
             ->add('fournisseur', EntityType::class, [
                 'class' => Fournisseur::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],

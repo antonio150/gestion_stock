@@ -29,6 +29,42 @@ class CommandeRepository extends ServiceEntityRepository
         return $a;
     }
 
+    public function findProduitInStock($value)
+    {
+        $conn= $this->getEntityManager()->getConnection();
+        $sql = 'SELECT commande.id, commande.quantite_commande,
+        client.nom as nomClient, produit.nom as nomProduit
+         FROM commande, client, produit where 
+         commande.id_client_id = client.id
+        and commande.produit_id = produit.id 
+        and
+         (produit.nom like "%'.$value.'%"
+         or client.nom like "%'.$value.'%"
+         )';
+         $stmt = $conn->prepare($sql);
+         $v = $stmt->executeQuery();
+         $a = $v->fetchAllAssociative();
+
+         return $a;
+    }
+
+    public function findAllCommande()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT commande.id, commande.quantite_commande,
+        client.nom as nomClient, produit.nom as nomProduit
+        FROM commande, client, produit
+        WHERE commande.id_client_id = client.id
+        and commande.produit_id = produit.id 
+        ';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+
     public function findCommandeDistincte()
     {
         $conn = $this->getEntityManager()->getConnection();

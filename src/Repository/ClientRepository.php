@@ -30,6 +30,18 @@ class ClientRepository extends ServiceEntityRepository
         return $a;
     }
 
+    public function findClient($value)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT * FROM client 
+        WHERE client.nom like '%".$value."%' ";
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
     //    /**
     //     * @return Client[] Returns an array of Client objects
     //     */

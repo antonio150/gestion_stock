@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Form\SearchProduitType;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,13 +15,32 @@ use Symfony\Component\Routing\Attribute\Route;
 class ProduitController extends AbstractController
 {
     #[Route('/produit', name: 'app_produit')]
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(ProduitRepository $produitRepository,
+    Request $request): Response
     {
-        $listeProduit = $produitRepository->findAll();
+        $listeProduit = $produitRepository->getAll();
+        $req = require("../templates/navbar/menu.html.twig");
 
+        $formRecherche = $this->createForm(SearchProduitType::class);
+        $formRecherche->handleRequest($request);
+
+        if($formRecherche->isSubmitted()){
+            $data = $formRecherche->getData();
+            $route = [
+                'nomProduit' => $data["produit"],
+            ];
+            return $this->redirectToRoute('app_produit', $route);
+        }
+
+        if(isset($_GET['nomProduit']))
+        {
+            $listeProduit= $produitRepository->findNom($_GET['nomProduit']);
+        }
         //  dd($listeProduit);
         return $this->render('produit/index.html.twig', [
             'listeProduit' => $listeProduit,
+            'require' => $req,
+            'form' => $formRecherche
         ]);
     }
 

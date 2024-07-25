@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Fournisseur;
 use App\Form\FournisseurType;
+use App\Form\SearchFournisseurType;
 use App\Repository\FournisseurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,13 +16,35 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class FournisseurController extends AbstractController
 {
     #[Route('/fournisseur', name: 'app_fournisseur')]
-    public function index(FournisseurRepository $fournisseurRepository): Response
-    {
-        $fournisseur = $fournisseurRepository->findAll();
+    public function index(
+        FournisseurRepository $fournisseurRepository,
+        Request $request
+    ): Response {
+        $fournisseur = $fournisseurRepository->getAll();
+        $formRecherche = $this->createForm(SearchFournisseurType::class);
+        $formRecherche->handleRequest($request);
+
+        if($formRecherche->isSubmitted())
+        {
+            $data = $formRecherche->getData();
+            $route = [
+                'value' => $data['fournisseur']
+            ];
+            return $this->redirectToRoute('app_fournisseur',$route);
+        }
+
+        if(isset($_GET['value']))
+        {
+            $fournisseur = $fournisseurRepository->findFournisseur($_GET['value']);
+        }
+
+        $req = require("../templates/navbar/menu.html.twig");
 
         return $this->render('fournisseur/index.html.twig', [
-            'controller_name' => 'FournisseurController',
+            'form' => $formRecherche,
+            'require' => $req,
             'fournisseur' => $fournisseur,
+
         ]);
     }
 

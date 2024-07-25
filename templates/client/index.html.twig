@@ -4,21 +4,31 @@
 {% endblock %}
 
 {% block body %}
-
+{# {{require}} #}
 
 	<div class="container mt-5">
-
 		<a href="{{path('ajout_client')}}" type="button" class="btn btn-primary">
 			Ajout client
 		</a>
+	</div>
 
+	<div>
+		{{form_start(form)}}
 
+		<div class="form-group">
+			{{form_label(form.client)}}
+			{{form_widget(form.client)}}
+			{{form_errors(form.client)}}
+		</div>
+
+		{{form_row(form.cherche)}}
+		{{form_end(form)}}
 	</div>
 
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col">></th>
+				
 				<th scope="col">Nom</th>
 				<th scope="col">Prénom</th>
 				<th scope="col">Adresse</th>
@@ -28,7 +38,7 @@
 		<tbody>
 			{% for items in listeClient %}
 				<tr>
-					<th scope="row">{{items.id}}</th>
+				
 					<td>{{items.nom}}</td>
 					<td>{{items.prenom}}</td>
 					<td>{{items.adresse}}</td>

@@ -3,15 +3,28 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-
+{# {{require}} #}
 <div >
 <a class="btn btn-primary" href="{{path('ajout_fournisseur')}}">Ajout fournisseur</a>
+</div>
+
+<div>
+	{{form_start(form)}}
+
+	<div class="form-group">
+		{{form_label(form.fournisseur)}}
+		{{form_widget(form.fournisseur)}}
+		{{form_errors(form.fournisseur)}}
+	</div>
+
+	{{form_row(form.cherche)}}
+	{{form_end(form)}}
 </div>
 
 <table class="table">
 		<thead>
 			<tr>
-				<th scope="col">#</th>
+				
 				<th scope="col">Nom</th>
 				<th scope="col">Type</th>
 				<th scope="col">Adresse</th>
@@ -21,10 +34,10 @@
 		<tbody>
 			{% for items in fournisseur %}
 				<tr>
-					<th scope="row">{{items.id}}</th>
-					<td>{{items.nom}}</td>
-					<td>{{items.type}}</td>
-					<td>{{items.adresse}}</td>
+					
+					<td>{{items['nom']}}</td>
+					<td>{{items['type']}}</td>
+					<td>{{items['adresse']}}</td>
 					<td>
 						<a href="{{path('delete_fournisseur', {id:items.id})}}" class="btn btn-alert">Supprimer</a>
 						<a href="{{path('edit_fournisseur', {id:items.id})}}" class="btn btn-success">Modifier</a>

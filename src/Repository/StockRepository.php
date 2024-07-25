@@ -41,6 +41,35 @@ class StockRepository extends ServiceEntityRepository
         ]);
     }
 
+    public function getAll()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT stock.id, stock.quantite_stock,
+        produit.nom, stock.emplacement FROM stock, produit
+        WHERE stock.produit_id=produit.id";
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+    public function findStock($value)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT stock.id, stock.quantite_stock,
+        stock.emplacement, produit.nom
+        FROM stock, produit
+        WHERE stock.produit_id = produit.id
+        AND produit.nom like '%".$value."%'";
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+
     //    /**
     //     * @return Stock[] Returns an array of Stock objects
     //     */

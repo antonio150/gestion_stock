@@ -16,6 +16,38 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function getAll()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT produit.id, produit.nom,
+         produit.description, produit.prix_unit,
+        fournisseur.nom as nomFournisseur
+         FROM produit, fournisseur
+         WHERE produit.fournisseur_id = fournisseur.id ';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+
+    public function findNom($produit)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT produit.id, produit.nom,
+        produit.description, produit.prix_unit,
+        fournisseur.nom as nomFournisseur FROM produit, fournisseur WHERE 
+        produit.fournisseur_id = fournisseur.id and
+        produit.nom like "%'.$produit.'%"';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+
     //    /**
     //     * @return Produit[] Returns an array of Produit objects
     //     */

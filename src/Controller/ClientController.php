@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Form\ClientType;
+use App\Form\SearchClientType;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,15 +15,34 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ClientController extends AbstractController
 {
-    #[Route('/client', name: 'app_client', methods: ['GET'])]
+    #[Route('/client', name: 'app_client', methods: ['GET', 'POST'])]
     public function index(Request $request, ClientRepository $clientRepository): Response
     {
         $client = new Client();
         $listeClient = $clientRepository->getAll();
-        // dd($listeClient);
+        $formRecherche = $this->createForm(SearchClientType::class);
+        $formRecherche->handleRequest($request);
+
+        if($formRecherche->isSubmitted())
+        {
+            $data = $formRecherche->getData();
+            $route = [
+                'value' => $data['client']
+            ];
+            return $this->redirectToRoute('app_client', $route);
+        }
+
+        if(isset($_GET['value']))
+        {
+            $listeClient = $clientRepository->findClient($_GET['value']);
+        }
+
+        $req = require("../templates/navbar/menu.html.twig");
 
         return $this->render('client/index.html.twig', [
             'listeClient' => $listeClient,
+            'form' => $formRecherche,
+            'require' => $req
         ]);
     }
 
