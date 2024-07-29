@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Fournisseur;
 use App\Repository\FournisseurRepository;
 
 class FournisseurService
@@ -18,7 +17,7 @@ class FournisseurService
     }
 
     /**
-     * @return Fournisseur[]
+     * @return array<array<string,mixed>>
      */
     public function getAllFournisseur(): array
     {

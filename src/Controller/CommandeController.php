@@ -21,27 +21,24 @@ class CommandeController extends AbstractController
         CommandeRepository $commandeRepository,
         Request $request
     ): Response {
-
-
         $formRecherche = $this->createForm(SearchCommandeFormType::class);
         $formRecherche->handleRequest($request);
-       
+
         $commande = $commandeRepository->findAllCommande();
         if ($formRecherche->isSubmitted()) {
             $data = $formRecherche->getData();
             //  dd($data["produit"]);
             $route = [
-                'nomProduit' => $data["produit"],
+                'nomProduit' => $data['produit'],
             ];
-            
+
             return $this->redirectToRoute('app_commande', $route);
         }
 
-        if(isset($_GET['nomProduit']))
-        {
+        if (isset($_GET['nomProduit'])) {
             $commande = $commandeRepository->findProduitInStock($_GET['nomProduit']);
         }
-        $req = require("../templates/navbar/menu.html.twig");
+        $req = require '../templates/navbar/menu.html.twig';
 
         return $this->render('commande/index.html.twig', [
             'commande' => $commande,
@@ -56,7 +53,7 @@ class CommandeController extends AbstractController
         EntityManagerInterface $entityManagerInterface,
 
         StockRepository $stockRepository,
-    ) {
+    ): Response {
         $commande = new Commande();
         $stock = new Stock();
         $form = $this->createForm(CommandeType::class, $commande);
@@ -78,8 +75,6 @@ class CommandeController extends AbstractController
 
             return $this->redirectToRoute('app_commande');
         }
-
-
 
         return $this->render('commande/ajout.html.twig', [
             'form' => $form->createView(),
@@ -117,18 +112,16 @@ class CommandeController extends AbstractController
             // dump($qteCommandeApres);
             // dd($stockQte);
             if ($qteCommandeVerification > 0) {
-                $qte =  $stockQte - $qteCommandeVerification;
+                $qte = $stockQte - $qteCommandeVerification;
 
                 $stockRepository->updateQuantite($idProduit, $qte);
-            } else if ($qteCommandeVerification < 0) {
+            } elseif ($qteCommandeVerification < 0) {
                 $qte = $stockQte - $qteCommandeVerification;
 
                 $stockRepository->updateQuantite($idProduit, $qte);
             }
             $entityManagerInterface->persist($commande);
             $entityManagerInterface->flush();
-
-
 
             return $this->redirectToRoute('app_commande');
         }
@@ -148,7 +141,7 @@ class CommandeController extends AbstractController
         Commande $commande,
         EntityManagerInterface $entityManagerInterface,
         StockRepository $stockRepository
-    ) {
+    ): Response {
         $quantiteCommandeProduit = $commande->getQuantiteCommande();
         $produit = $commande->getProduit();
         $idProduit = $produit->getId();

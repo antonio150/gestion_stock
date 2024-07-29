@@ -24,27 +24,25 @@ class FournisseurController extends AbstractController
         $formRecherche = $this->createForm(SearchFournisseurType::class);
         $formRecherche->handleRequest($request);
 
-        if($formRecherche->isSubmitted())
-        {
+        if ($formRecherche->isSubmitted()) {
             $data = $formRecherche->getData();
             $route = [
-                'value' => $data['fournisseur']
+                'value' => $data['fournisseur'],
             ];
-            return $this->redirectToRoute('app_fournisseur',$route);
+
+            return $this->redirectToRoute('app_fournisseur', $route);
         }
 
-        if(isset($_GET['value']))
-        {
+        if (isset($_GET['value'])) {
             $fournisseur = $fournisseurRepository->findFournisseur($_GET['value']);
         }
 
-        $req = require("../templates/navbar/menu.html.twig");
+        $req = require '../templates/navbar/menu.html.twig';
 
         return $this->render('fournisseur/index.html.twig', [
             'form' => $formRecherche,
             'require' => $req,
             'fournisseur' => $fournisseur,
-
         ]);
     }
 

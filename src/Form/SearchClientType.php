@@ -13,16 +13,15 @@ class SearchClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('client', TextType::class,[
+            ->add('client', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                   
                 ],
                 'label' => 'Trouver de client',
-                'required' => false
+                'required' => false,
             ])
-            ->add('cherche', SubmitType::class,[
-                'attr' => ['class' => 'btn btn-primary']
+            ->add('cherche', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary'],
             ])
         ;
     }

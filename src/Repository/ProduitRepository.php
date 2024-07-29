@@ -16,7 +16,10 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
-    public function getAll()
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getAll(): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT produit.id, produit.nom,
@@ -31,8 +34,10 @@ class ProduitRepository extends ServiceEntityRepository
         return $a;
     }
 
-
-    public function findNom($produit)
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findNom(string $produit): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT produit.id, produit.nom,
@@ -46,7 +51,6 @@ class ProduitRepository extends ServiceEntityRepository
 
         return $a;
     }
-
 
     //    /**
     //     * @return Produit[] Returns an array of Produit objects

@@ -16,7 +16,10 @@ class StockRepository extends ServiceEntityRepository
         parent::__construct($registry, Stock::class);
     }
 
-    public function getQuantite($idProduit)
+    /**
+     * @return array<string, mixed>|bool
+     */
+    public function getQuantite(int $idProduit)
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT * FROM stock WHERE 
@@ -28,7 +31,7 @@ class StockRepository extends ServiceEntityRepository
         return $a;
     }
 
-    public function updateQuantite($idProduit, $qteStock)
+    public function updateQuantite(int $idProduit, int $qteStock): void
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'UPDATE stock set 
@@ -41,12 +44,15 @@ class StockRepository extends ServiceEntityRepository
         ]);
     }
 
-    public function getAll()
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getAll(): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT stock.id, stock.quantite_stock,
+        $sql = 'SELECT stock.id, stock.quantite_stock,
         produit.nom, stock.emplacement FROM stock, produit
-        WHERE stock.produit_id=produit.id";
+        WHERE stock.produit_id=produit.id';
         $stmt = $conn->prepare($sql);
         $v = $stmt->executeQuery();
         $a = $v->fetchAllAssociative();
@@ -54,7 +60,10 @@ class StockRepository extends ServiceEntityRepository
         return $a;
     }
 
-    public function findStock($value)
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findStock(string $value): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT stock.id, stock.quantite_stock,
@@ -68,7 +77,6 @@ class StockRepository extends ServiceEntityRepository
 
         return $a;
     }
-
 
     //    /**
     //     * @return Stock[] Returns an array of Stock objects

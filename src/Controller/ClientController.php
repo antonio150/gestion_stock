@@ -23,26 +23,25 @@ class ClientController extends AbstractController
         $formRecherche = $this->createForm(SearchClientType::class);
         $formRecherche->handleRequest($request);
 
-        if($formRecherche->isSubmitted())
-        {
+        if ($formRecherche->isSubmitted()) {
             $data = $formRecherche->getData();
             $route = [
-                'value' => $data['client']
+                'value' => $data['client'],
             ];
+
             return $this->redirectToRoute('app_client', $route);
         }
 
-        if(isset($_GET['value']))
-        {
+        if (isset($_GET['value'])) {
             $listeClient = $clientRepository->findClient($_GET['value']);
         }
 
-        $req = require("../templates/navbar/menu.html.twig");
+        $req = require '../templates/navbar/menu.html.twig';
 
         return $this->render('client/index.html.twig', [
             'listeClient' => $listeClient,
             'form' => $formRecherche,
-            'require' => $req
+            'require' => $req,
         ]);
     }
 

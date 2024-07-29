@@ -16,31 +16,32 @@ class ProduitController extends AbstractController
 {
     #[Route('/produit', name: 'app_produit')]
     public function index(ProduitRepository $produitRepository,
-    Request $request): Response
+        Request $request): Response
     {
         $listeProduit = $produitRepository->getAll();
-        $req = require("../templates/navbar/menu.html.twig");
+        $req = require '../templates/navbar/menu.html.twig';
 
         $formRecherche = $this->createForm(SearchProduitType::class);
         $formRecherche->handleRequest($request);
 
-        if($formRecherche->isSubmitted()){
+        if ($formRecherche->isSubmitted()) {
             $data = $formRecherche->getData();
             $route = [
-                'nomProduit' => $data["produit"],
+                'nomProduit' => $data['produit'],
             ];
+
             return $this->redirectToRoute('app_produit', $route);
         }
 
-        if(isset($_GET['nomProduit']))
-        {
-            $listeProduit= $produitRepository->findNom($_GET['nomProduit']);
+        if (isset($_GET['nomProduit'])) {
+            $listeProduit = $produitRepository->findNom($_GET['nomProduit']);
         }
+
         //  dd($listeProduit);
         return $this->render('produit/index.html.twig', [
             'listeProduit' => $listeProduit,
             'require' => $req,
-            'form' => $formRecherche
+            'form' => $formRecherche,
         ]);
     }
 
@@ -88,7 +89,7 @@ class ProduitController extends AbstractController
     public function deleteProduit(
         Produit $produit,
         EntityManagerInterface $entityManagerInterface
-    ) {
+    ): Response {
         $entityManagerInterface->remove($produit);
         $entityManagerInterface->flush();
 

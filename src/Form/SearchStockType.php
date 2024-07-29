@@ -14,15 +14,15 @@ class SearchStockType extends AbstractType
     {
         $builder
         ->add('stock', TextType::class,
-        [
-            'attr' => ['class' => 'form-control'],
-            'label' => 'Trouver stock',
-            'required' => false
-        ])
+            [
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Trouver stock',
+                'required' => false,
+            ])
         ->add('cherche', SubmitType::class,
-        [
-            'attr' => ['class' => 'btn btn-primary']
-        ])
+            [
+                'attr' => ['class' => 'btn btn-primary'],
+            ])
         ;
     }
 

@@ -14,15 +14,15 @@ class SearchFournisseurType extends AbstractType
     {
         $builder
             ->add('fournisseur', TextType::class,
-            [
-                'attr' => ['class' => 'form-control'],
-                'label' => 'Trouver fournisseur',
-                'required' => false
-            ])
+                [
+                    'attr' => ['class' => 'form-control'],
+                    'label' => 'Trouver fournisseur',
+                    'required' => false,
+                ])
             ->add('cherche', SubmitType::class,
-            [
-                'attr' => ['class' => 'btn btn-primary']
-            ])
+                [
+                    'attr' => ['class' => 'btn btn-primary'],
+                ])
         ;
     }
 

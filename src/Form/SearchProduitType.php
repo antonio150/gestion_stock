@@ -14,17 +14,17 @@ class SearchProduitType extends AbstractType
     {
         $builder
             ->add('produit', TextType::class,
-            [
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Nom produit',
-                ],
-                'label' => 'Faire de recherche',
-                'required' => false 
-            ])
+                [
+                    'attr' => [
+                        'class' => 'form-control',
+                        'placeholder' => 'Nom produit',
+                    ],
+                    'label' => 'Faire de recherche',
+                    'required' => false,
+                ])
             ->add('cherche', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-success']
-            ])
+                    'attr' => ['class' => 'btn btn-success'],
+                ])
         ;
     }
 

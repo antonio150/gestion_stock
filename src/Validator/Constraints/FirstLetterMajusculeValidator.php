@@ -7,7 +7,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class FirstLetterMajusculeValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint)
     {
         /* @var FirstLetterMajuscule $constraint */
 

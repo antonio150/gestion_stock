@@ -11,14 +11,15 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommandeRepository extends ServiceEntityRepository
 {
-    private $connection;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Commande::class);
     }
 
-    public function getAllProduitInCommandeById($produitId)
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getAllProduitInCommandeById(int $produitId): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT * FROM commande WHERE commande.produit_id = :produitId';
@@ -29,9 +30,12 @@ class CommandeRepository extends ServiceEntityRepository
         return $a;
     }
 
-    public function findProduitInStock($value)
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findProduitInStock(string $value): array
     {
-        $conn= $this->getEntityManager()->getConnection();
+        $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT commande.id, commande.quantite_commande,
         client.nom as nomClient, produit.nom as nomProduit
          FROM commande, client, produit where 
@@ -41,14 +45,17 @@ class CommandeRepository extends ServiceEntityRepository
          (produit.nom like "%'.$value.'%"
          or client.nom like "%'.$value.'%"
          )';
-         $stmt = $conn->prepare($sql);
-         $v = $stmt->executeQuery();
-         $a = $v->fetchAllAssociative();
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
 
-         return $a;
+        return $a;
     }
 
-    public function findAllCommande()
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findAllCommande(): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT commande.id, commande.quantite_commande,
@@ -64,8 +71,10 @@ class CommandeRepository extends ServiceEntityRepository
         return $a;
     }
 
-
-    public function findCommandeDistincte()
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findCommandeDistincte(): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT SUM(commande.quantite_commande) as SumQte ,

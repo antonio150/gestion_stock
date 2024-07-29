@@ -20,14 +20,13 @@ class SearchCommandeFormType extends AbstractType
                     'attr' => [
                         'class' => 'form-control',
                         'placeholder' => 'Produit ou Client',
-                        
                     ],
                     'label' => 'Faire de recherche',
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add('cherche', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-success']
+                'attr' => ['class' => 'btn btn-success'],
             ]);
     }
 

@@ -30,7 +30,10 @@ class ClientRepository extends ServiceEntityRepository
         return $a;
     }
 
-    public function findClient($value)
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findClient(string $value): array
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = "SELECT * FROM client 
