@@ -20,6 +20,9 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
     
+    App\Validator\Constraints\FirstLetterMajusculeValidator:
+        tags:
+            - { name: validator.constraint_validator, alias: first_letter_majuscule }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

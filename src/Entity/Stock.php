@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\StockRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StockRepository::class)]
@@ -15,50 +13,18 @@ class Stock
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, Produit>
-     */
-    #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'stocks')]
-    private Collection $produit;
-
     #[ORM\Column]
     private ?int $quantiteStock = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $emplacement = null;
 
-    public function __construct()
-    {
-        $this->produit = new ArrayCollection();
-    }
+    #[ORM\ManyToOne]
+    private ?Produit $produit = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduit(): Collection
-    {
-        return $this->produit;
-    }
-
-    public function addProduit(Produit $produit): static
-    {
-        if (!$this->produit->contains($produit)) {
-            $this->produit->add($produit);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): static
-    {
-        $this->produit->removeElement($produit);
-
-        return $this;
     }
 
     public function getQuantiteStock(): ?int
@@ -81,6 +47,18 @@ class Stock
     public function setEmplacement(?string $emplacement): static
     {
         $this->emplacement = $emplacement;
+
+        return $this;
+    }
+
+    public function getProduit(): ?Produit
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?Produit $produit): static
+    {
+        $this->produit = $produit;
 
         return $this;
     }

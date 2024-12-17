@@ -16,6 +16,35 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getAll(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM client';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findClient(string $value): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT * FROM client 
+        WHERE client.nom like '%".$value."%' ";
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
     //    /**
     //     * @return Client[] Returns an array of Client objects
     //     */

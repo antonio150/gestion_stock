@@ -16,6 +16,80 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function getAllProduitInCommandeById(int $produitId): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT * FROM commande WHERE commande.produit_id = :produitId';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery(['produitId' => $produitId]);
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findProduitInStock(string $value): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT commande.id, commande.quantite_commande,
+        client.nom as nomClient, produit.nom as nomProduit
+         FROM commande, client, produit where 
+         commande.id_client_id = client.id
+        and commande.produit_id = produit.id 
+        and
+         (produit.nom like "%'.$value.'%"
+         or client.nom like "%'.$value.'%"
+         )';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findAllCommande(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT commande.id, commande.quantite_commande,
+        client.nom as nomClient, produit.nom as nomProduit
+        FROM commande, client, produit
+        WHERE commande.id_client_id = client.id
+        and commande.produit_id = produit.id 
+        ';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
+    /**
+     * @return array<array<string, mixed>>
+     */
+    public function findCommandeDistincte(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT SUM(commande.quantite_commande) as SumQte ,
+        commande.id_client_id, commande.id,client.nom as nomCLient,
+        commande.produit_id, produit.nom as nomProduit FROM commande, produit , client
+        WHERE commande.produit_id=produit.id 
+        and commande.id_client_id = client.id
+        GROUP BY produit_id';
+        $stmt = $conn->prepare($sql);
+        $v = $stmt->executeQuery();
+        $a = $v->fetchAllAssociative();
+
+        return $a;
+    }
+
     //    /**
     //     * @return Commande[] Returns an array of Commande objects
     //     */
