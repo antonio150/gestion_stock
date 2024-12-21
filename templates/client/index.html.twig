@@ -3,8 +3,10 @@
 {% block title %}Ajout client
 {% endblock %}
 
+{# {{ component('menu', { activeRoute: app.request.attributes.get('_route') }) }} #}
+
 {% block body %}
-{# {{require}} #}
+
 
 	<div class="container mt-5">
 		<a href="{{path('ajout_client')}}" type="button" class="btn btn-primary">

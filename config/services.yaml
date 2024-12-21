@@ -19,10 +19,16 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    
+    App\Controller\ErrorController:
+        tags: ['controller.service_arguments']
+
     App\Validator\Constraints\FirstLetterMajusculeValidator:
         tags:
             - { name: validator.constraint_validator, alias: first_letter_majuscule }
-
+    App\Twig\Components\:
+        resource: '../src/Twig/Components/*'
+        tags: ['twig.component']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+framework:
+    error_controller: 'App\Controller\ErrorController::show'

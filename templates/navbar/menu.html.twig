@@ -1,8 +1,23 @@
-<div class="menu">
+{# <div class="menu">
 	<ul>
 		<li><a class="" href="/produit">Produit</a></li>
 		<li><a class="" href="/">Stock</a></li>
 		<li><a class="" href="/client">Client</a></li>
 		<li><a class="" href="/fournisseur">Fournisseur</a></li>
+		<li><a class="" href="/dashboard">Tableau de bord</a></li>
+		<li><a class="" href="/logout">Deconnecter</a></li>
 	</ul>
-</div>
+</div> #}
+
+
+
+<nav class="menu">
+    <ul>
+        {% for item in items %}
+            <li class="{{ item.route == activeRoute ? 'active' : '' }}">
+                <a href="{{ path(item.route) }}">{{ item.label }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+

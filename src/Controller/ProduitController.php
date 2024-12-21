@@ -19,8 +19,7 @@ class ProduitController extends AbstractController
         Request $request): Response
     {
         $listeProduit = $produitRepository->getAll();
-        $req = require '../templates/navbar/menu.html.twig';
-
+       
         $formRecherche = $this->createForm(SearchProduitType::class);
         $formRecherche->handleRequest($request);
 
@@ -40,7 +39,7 @@ class ProduitController extends AbstractController
         //  dd($listeProduit);
         return $this->render('produit/index.html.twig', [
             'listeProduit' => $listeProduit,
-            'require' => $req,
+           
             'form' => $formRecherche,
         ]);
     }

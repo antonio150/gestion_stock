@@ -38,11 +38,10 @@ class CommandeController extends AbstractController
         if (isset($_GET['nomProduit'])) {
             $commande = $commandeRepository->findProduitInStock($_GET['nomProduit']);
         }
-        $req = require '../templates/navbar/menu.html.twig';
-
+        
         return $this->render('commande/index.html.twig', [
             'commande' => $commande,
-            'require' => $req,
+          
             'form' => $formRecherche,
         ]);
     }

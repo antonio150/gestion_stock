@@ -36,88 +36,88 @@ class ClientController extends AbstractController
             $listeClient = $clientRepository->findClient($_GET['value']);
         }
 
-        $req = require '../templates/navbar/menu.html.twig';
+        // $req = require '../templates/navbar/menu.html.twig';
 
         return $this->render('client/index.html.twig', [
             'listeClient' => $listeClient,
             'form' => $formRecherche,
-            'require' => $req,
+            // 'require' => $req,
         ]);
     }
 
-    #[Route('/ajout_client', name: 'ajout_client', methods: ['GET', 'POST'])]
-    public function addClient(
-        Request $request,
-        EntityManagerInterface $entityManagerInterface,
-        ValidatorInterface $validatorInterface
-    ): Response {
-        $client = new Client();
-        $form = $this->createForm(ClientType::class, $client);
-        $errorMessages = [];
-        $form->handleRequest($request);
-        $errors = null;
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $entityManagerInterface->persist($client);
-                $entityManagerInterface->flush();
+        #[Route('/ajout_client', name: 'ajout_client', methods: ['GET', 'POST'])]
+        public function addClient(
+            Request $request,
+            EntityManagerInterface $entityManagerInterface,
+            ValidatorInterface $validatorInterface
+        ): Response {
+            $client = new Client();
+            $form = $this->createForm(ClientType::class, $client);
+            $errorMessages = [];
+            $form->handleRequest($request);
+            $errors = null;
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $entityManagerInterface->persist($client);
+                    $entityManagerInterface->flush();
 
-                return $this->redirectToRoute('app_client');
-            } else {
-                $errors = $validatorInterface->validate($client);
-                foreach ($errors as $error) {
-                    $this->addFlash('error', $error->getMessage());
+                    return $this->redirectToRoute('app_client');
+                } else {
+                    $errors = $validatorInterface->validate($client);
+                    foreach ($errors as $error) {
+                        $this->addFlash('error', $error->getMessage());
+                    }
+
+                    return $this->redirectToRoute('ajout_client');
                 }
-
-                return $this->redirectToRoute('ajout_client');
             }
+
+            return $this->render('client/ajout.html.twig', [
+                'form' => $form->createView(),
+                'errors' => $errors,
+            ]);
         }
 
-        return $this->render('client/ajout.html.twig', [
-            'form' => $form->createView(),
-            'errors' => $errors,
-        ]);
-    }
+        #[Route('/edit_client/{id}', name: 'edit_client', methods: ['POST', 'GET'])]
+        public function editClient(
+            Client $client,
+            Request $request,
+            EntityManagerInterface $entityManagerInterface,
+            ValidatorInterface $validatorInterface
+        ): Response {
+            $form = $this->createForm(ClientType::class, $client);
+            $form->handleRequest($request);
+            $route = [
+                'id' => $client->getId(),
+            ];
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    $form->getData();
+                    $entityManagerInterface->persist($client);
+                    $entityManagerInterface->flush();
 
-    #[Route('/edit_client/{id}', name: 'edit_client', methods: ['POST', 'GET'])]
-    public function editClient(
-        Client $client,
-        Request $request,
-        EntityManagerInterface $entityManagerInterface,
-        ValidatorInterface $validatorInterface
-    ): Response {
-        $form = $this->createForm(ClientType::class, $client);
-        $form->handleRequest($request);
-        $route = [
-            'id' => $client->getId(),
-        ];
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $form->getData();
-                $entityManagerInterface->persist($client);
-                $entityManagerInterface->flush();
+                    return $this->redirectToRoute('app_client');
+                } else {
+                    $errors = $validatorInterface->validate($client);
+                    foreach ($errors as $error) {
+                        $this->addFlash('error', $error->getMessage());
+                    }
 
-                return $this->redirectToRoute('app_client');
-            } else {
-                $errors = $validatorInterface->validate($client);
-                foreach ($errors as $error) {
-                    $this->addFlash('error', $error->getMessage());
+                    return $this->redirectToRoute('edit_client', $route);
                 }
-
-                return $this->redirectToRoute('edit_client', $route);
             }
+
+            return $this->render('client/edit.html.twig', [
+                'form' => $form->createView(),
+            ]);
         }
 
-        return $this->render('client/edit.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+        #[Route('/delete_client/{id}', name: 'delete_client', methods: ['POST', 'GET'])]
+        public function deleteClient(Client $client, EntityManagerInterface $manager): Response
+        {
+            $manager->remove($client);
+            $manager->flush();
 
-    #[Route('/delete_client/{id}', name: 'delete_client', methods: ['POST', 'GET'])]
-    public function deleteClient(Client $client, EntityManagerInterface $manager): Response
-    {
-        $manager->remove($client);
-        $manager->flush();
-
-        return $this->redirectToRoute('app_client');
-    }
+            return $this->redirectToRoute('app_client');
+        }
 }

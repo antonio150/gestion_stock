@@ -1,0 +1,12 @@
+
+
+<nav class="menu">
+    <ul>
+        {% for item in items %}
+            <li class="{{ item.route == activeRoute ? 'active' : '' }}">
+                <a href="{{ path(item.route) }}">{{ item.label }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
+

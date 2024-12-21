@@ -1,0 +1,7 @@
+<nav>
+    <ul>
+        {% for item in menuItems %}
+            <li><a href="{{ item.url }}" class="menu-link">{{ item.label }}</a></li>
+        {% endfor %}
+    </ul>
+</nav>

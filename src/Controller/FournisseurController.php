@@ -37,11 +37,8 @@ class FournisseurController extends AbstractController
             $fournisseur = $fournisseurRepository->findFournisseur($_GET['value']);
         }
 
-        $req = require '../templates/navbar/menu.html.twig';
-
         return $this->render('fournisseur/index.html.twig', [
             'form' => $formRecherche,
-            'require' => $req,
             'fournisseur' => $fournisseur,
         ]);
     }
