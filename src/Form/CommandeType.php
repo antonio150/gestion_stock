@@ -29,6 +29,8 @@ class CommandeType extends AbstractType
             ->add('Produit', EntityType::class, [
                 'class' => Produit::class,
                 'choice_label' => 'nom',
+                'required' => true,
+                'attr' => ['required' => 'required']
             ])
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],

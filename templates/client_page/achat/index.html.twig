@@ -1,0 +1,38 @@
+{% extends 'client_page/index.html.twig' %}
+
+{% block title %}Achat{% endblock %}
+
+
+{% block body %}
+<div>
+
+<div> <a href="{{path('ajout_achat')}}" class="btn"> Ajouter </a> </div>
+<div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Montant</th>
+                <th>Fournisseur</th>
+                <th>Date</th>
+                <th>Heure</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for list in listeAchat %}
+            <tr>
+                <td>{{ list.produit }}</td>
+                <td>{{ list.montant }}</td>
+                <td>{{ list.fournisseur }}</td>
+                <td>{{ list.dateAchat|date('Y-m-d') }}</td>
+                <td>{{ list.time|date('H:i:s') }}</td>
+            </tr>
+          {% endfor %}  
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+{% endblock %}

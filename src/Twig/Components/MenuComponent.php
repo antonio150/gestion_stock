@@ -20,6 +20,8 @@ class MenuComponent
                 ['label' => 'Stock', 'route' => 'app_stock'],
                 ['label' => 'Fournisseur', 'route' => 'app_fournisseur'],
                 ['label' => 'Produit', 'route' => 'app_produit'],
+                ['label' => 'Commande', 'route' => 'app_commande'],
+                ['label' => 'Achat', 'route' => 'app_achat'],
                 ['label' => 'Tableau de bord', 'route' => 'dashboard'],
                 ['label' => 'Deconnecter', 'route' => 'app_logout'],
             ];
@@ -29,6 +31,8 @@ class MenuComponent
                 ['label' => 'Stock', 'route' => 'app_stock'],
                 ['label' => 'Fournisseur', 'route' => 'app_fournisseur'],
                 ['label' => 'Produit', 'route' => 'app_produit'],
+                ['label' => 'Commande', 'route' => 'app_commande'],
+                ['label' => 'Achat', 'route' => 'app_achat'],
                 ['label' => 'Deconnecter', 'route' => 'app_logout'],
             ];
         }

@@ -1,0 +1,43 @@
+{% extends 'client_page/index.html.twig' %}
+
+{% block title %}Ajout{% endblock %}
+{% block body %}
+
+<div> <a href="{{path('app_achat')}}" class="btn"> Retour </a> </div>
+
+
+<form action="/achat/ajout" method="POST">
+
+    <label for="produit">Produit :</label>
+    <select id="produit" name="produit" >
+        <option value=""> Choisir produit </option>
+        {% for listProd in listProduit %}
+            <option value="{{listProd.id}}"> {{listProd.nom}} </option>
+        {% endfor %}
+    </select><br>
+
+  
+    <label for="montant">Montant :</label>
+    <input type="number" id="montant" name="montant" required><br><br>
+
+   
+    <label for="fournisseur">Fournisseur :</label>
+    <select id="fournisseur" name="fournisseur" >
+        <option value=""> Choisir fournisseur </option>
+        {% for listFourniss in listFournisseur %}
+            <option value="{{listFourniss.id}}"> {{listFourniss.nom}} </option>
+        {% endfor %}
+    </select><br>
+   
+    <label for="date_achat">Date achat :</label>
+    <input type='date' id="date_achat" name="date_achat"  /><br><br>
+
+   <label for="time_achat">Heure achat :</label>
+    <input type='time' id="time_achat" name="time_achat"  /><br><br>
+
+    <!-- Bouton d'envoi -->
+    <button type="submit">Envoyer</button>
+  </form>
+
+
+{% endblock %}
