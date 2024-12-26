@@ -32,11 +32,5 @@ class MenuComponent
                 ['label' => 'Deconnecter', 'route' => 'app_logout'],
             ];
         }
-
-        // Si activeRoute est vide, on lui donne une valeur par défaut.
-        // $this->activeRoute = (string) $this->activeRoute ?: 'home'; // Forcer en string et ajouter un fallback.
-    
-    // Vérification du contenu de $items
-    // dump($this->items);
     }
 }

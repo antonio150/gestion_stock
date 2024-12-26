@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block menu %} 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="{{ asset('css/style_board.css') }}">
+<script src="/js/menu-loader.js"></script>
+{{ component('menu_dashboard', { menuItems: menuItems }) }}
+<div id="content">
+    <p>Le contenu chargé s'affichera ici.</p>
+</div>{% endblock %}
+
+{% block body %}
+{% endblock %}

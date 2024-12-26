@@ -19,10 +19,12 @@ class CommandeType extends AbstractType
         $builder
             ->add('quantiteCommande', IntegerType::class, [
                 'attr' => ['class' => 'form-control'],
+                'required' => true,
             ])
             ->add('idClient', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'nom',
+                'required' => true,
             ])
             ->add('Produit', EntityType::class, [
                 'class' => Produit::class,

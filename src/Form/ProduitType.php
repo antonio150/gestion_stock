@@ -20,16 +20,23 @@ class ProduitType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'attr' => ['class' => 'form-control'],
+                'required' => true,
             ])
             ->add('description', TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
+                'required' => false,
             ])
             ->add('prixUnit', NumberType::class, [
                 'attr' => ['class' => 'form-control'],
+                'required' => true,
             ])
             ->add('fournisseur', EntityType::class, [
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
+                'required' => true,
+                'attr' => [
+                    'required' => 'required', // Forcer l'attribut HTML
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],

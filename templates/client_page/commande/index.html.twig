@@ -1,0 +1,61 @@
+{% extends 'client_page/index.html.twig' %}
+
+{% block title %}produit
+{% endblock %}
+
+{% block body %}
+{# {{require}} #}
+	<div>
+		<a class="btn btn-primary" href="{{path('ajout_commande')}}">Ajout commande</a>
+	</div>
+
+	{% for message in app.flashes('error') %}
+		<div class="alert alert-danger">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	<div>
+		{{form_start(form)}}
+
+		<div class="form-group">
+			{{form_label(form.produit)}}
+			{{form_widget(form.produit)}}
+			{{form_errors(form.produit)}}
+		</div>
+
+		{{form_row(form.cherche)}}
+		{{form_end(form)}}
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+
+				<th scope="col">Quantité</th>
+				<th scope="col">Client</th>
+				<th scope="col">Produit</th>
+
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for items in commande %}
+				<tr>
+
+					<td>{{items['quantite_commande']}}</td>
+					<td>{{items['nomClient']}}</td>
+					<td>{{items['nomProduit']}}</td>
+
+					<td>
+						<a href="{{path('delete_commande', {id:items['id']})}}" class="btn btn-alert">Supprimer</a>
+						<a href="{{path('edit_commande', {id:items['id']})}}" class="btn btn-success">Modifier</a>
+					</td>
+
+				</tr>
+			{% endfor %}
+
+
+		</tbody>
+	</table>
+{% endblock %}

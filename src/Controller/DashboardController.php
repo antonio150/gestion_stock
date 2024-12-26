@@ -11,8 +11,15 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'dashboard')]
     public function index(): Response
     {
-        $req = require '../templates/dashboard/menu_dashboard.html.twig';
-        return $this->render('dashboard/index.html.twig', [
+        // $req = require '../templates/dashboard/menu_dashboard.html.twig';
+        $menuItems = [
+            ['label' => 'Tableau de bord', 'url' => '/tableboard'],
+            ['label' => 'Utilisateur', 'url' => '/utilisateur'],
+            ['label' => 'Parametre', 'url' => '/parametre'],
+        ];
+        
+        return $this->render('admin_page/dashboard/index.html.twig', [
+            'menuItems' => $menuItems,
         ]);
     }
 }

@@ -1,0 +1,26 @@
+{% extends 'client_page/index.html.twig' %}
+{% block title %}Ajout produit
+{% endblock %}
+{% block body %}
+
+	{{form_start(form)}}
+
+	<div class="form-group">
+		{{form_label(form.quantiteCommande)}}
+		{{form_widget(form.quantiteCommande)}}
+		{{form_errors(form.quantiteCommande)}}
+	</div>
+	<div class="form-group">
+		{{form_label(form.idClient)}}
+		{{form_widget(form.idClient)}}
+		{{form_errors(form.idClient)}}
+	</div>
+	<div class="form-group">
+		{{form_label(form.Produit)}}
+		{{form_widget(form.Produit)}}
+		{{form_errors(form.Produit)}}
+	</div>
+
+	{{form_row(form.save)}}
+	{{form_end(form)}}
+{% endblock %}

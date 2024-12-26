@@ -1,0 +1,59 @@
+{% extends 'client_page/index.html.twig' %}
+
+{% block title %}Stock
+{% endblock %}
+
+
+
+
+
+{% block body %}
+{# {{require}} #}
+	<div>
+		<a class="btn btn-primary" href="{{path('app_stock')}}">Ajout stock</a>
+	</div>
+
+	<div>
+		{{form_start(form)}}
+
+		<div class="form-group">
+			{{form_label(form.stock)}}
+			{{form_widget(form.stock)}}
+			{{form_errors(form.stock)}}
+		</div>
+
+		{{form_row(form.cherche)}}
+		{{form_end(form)}}
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+
+				<th scope="col">Quantité</th>
+				<th scope="col">Emplacement</th>
+				<th scope="col">Produit</th>
+
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for items in listestock %}
+				<tr>
+
+					<td>{{items['quantite_stock']}}</td>
+					<td>{{items['emplacement']}}</td>
+					<td>{{items['nom']}}</td>
+
+					<td>
+						<a href="{{path('delete_produit', {id:items.id})}}" class="btn btn-alert">Supprimer</a>
+						<a href="{{path('edit_stock', {id:items.id})}}" class="btn btn-success">Modifier</a>
+					</td>
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
+
+{% endblock %}

@@ -16,12 +16,15 @@ class FournisseurType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'attr' => ['class' => 'form-control'],
+                'required' => true,
             ])
             ->add('type', TextType::class, [
                 'attr' => ['class' => 'form-control'],
+                'required' => true,
             ])
             ->add('adresse', TextType::class, [
                 'attr' => ['class' => 'form-control'],
+                'required' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+{# 
+{% dump(app.request.attributes.get('_route')) %}
+{% dump(component('menu', { activeRoute: app.request.attributes.get('_route') ?: 'home' })) %} #}
+{% block menu %}
+{{ component('menu', { activeRoute: app.request.attributes.get('_route') ?: 'home' }) }}
+{% endblock %}
+
+	
+
+{% block body %}
+
+	
+
+{% endblock %}
