@@ -1,0 +1,37 @@
+{% extends 'client_page/index.html.twig' %}
+
+{% block title %}Hello MouvementController!{% endblock %}
+
+{% block body %}
+
+<div>
+
+<div> <a href="{{path('ajout_achat')}}" class="btn"> Retour </a> </div>
+<div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Type</th>
+                <th>Quantite</th>
+                <th>Date</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+        {% for list in listeMouvement %}
+            <tr>
+                <td>{{ list.produit }}</td>
+                <td>{{ list.type }}</td>
+                <td>{{ list.quantite }}</td>
+                <td>{{ list.date|date('Y-m-d') }}</td>
+            </tr>
+          {% endfor %}  
+        </tbody>
+    </table>
+
+</div>
+
+</div>
+{% endblock %}

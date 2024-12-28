@@ -21,6 +21,12 @@
 		{{form_errors(form.Produit)}}
 	</div>
 
+	<div class="form-group">
+		{{form_label(form.date_commande)}}
+		{{form_widget(form.date_commande)}}
+		{{form_errors(form.date_commande)}}
+	</div>
+
 	{{form_row(form.save)}}
 	{{form_end(form)}}
 {% endblock %}

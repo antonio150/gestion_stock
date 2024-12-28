@@ -9,14 +9,15 @@
 <div> <a href="{{path('ajout_achat')}}" class="btn"> Ajouter </a> </div>
 <div>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>Produit</th>
-                <th>Montant</th>
-                <th>Fournisseur</th>
-                <th>Date</th>
-                <th>Heure</th>
+                <th scope="col">Produit</th>
+                <th scope="col">Montant</th>
+                <th scope="col">Fournisseur</th>
+                <th scope="col">Date</th>
+                <th scope="col">Heure</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,10 @@
                 <td>{{ list.fournisseur }}</td>
                 <td>{{ list.dateAchat|date('Y-m-d') }}</td>
                 <td>{{ list.time|date('H:i:s') }}</td>
+                <td>
+                    <a href="#" class="btn btn-alert">Supprimer</a>
+                    <a href="{{path('edit_achat', {id:list.id})}}" class="btn btn-success">Modifier</a>
+                </td>
             </tr>
           {% endfor %}  
         </tbody>

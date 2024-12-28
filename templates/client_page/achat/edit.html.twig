@@ -1,6 +1,6 @@
 {% extends 'client_page/index.html.twig' %}
 
-{% block title %}Ajout{% endblock %}
+{% block title %}Modification{% endblock %}
 {% block body %}
 
 <div> <a href="{{path('app_achat')}}" class="btn"> Retour </a> </div>
@@ -12,7 +12,7 @@
     <select id="produit" name="produit" >
         <option value=""> Choisir produit </option>
         {% for listProd in listProduit %}
-            <option value="{{listProd.id}}"> {{listProd.nom}} </option>
+            <option value="{{listProd.id}}" {% if listProd.id == achatValue.produit %} selected {% endif %} > {{listProd.nom}} </option>
         {% endfor %}
     </select><br>
 

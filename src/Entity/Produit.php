@@ -84,6 +84,6 @@ class Produit
 
     public function __toString()
     {
-        return (string) $this->getFournisseur(); // or any other string property
+        return (string)  $this->nom; // or any other string property
     }
 }

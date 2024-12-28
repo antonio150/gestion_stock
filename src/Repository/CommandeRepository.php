@@ -59,7 +59,8 @@ class CommandeRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT commande.id, commande.quantite_commande,
-        client.nom as nomClient, produit.nom as nomProduit
+        client.nom as nomClient, produit.nom as nomProduit, 
+        commande.date_commande
         FROM commande, client, produit
         WHERE commande.id_client_id = client.id
         and commande.produit_id = produit.id 
@@ -88,6 +89,16 @@ class CommandeRepository extends ServiceEntityRepository
         $a = $v->fetchAllAssociative();
 
         return $a;
+    }
+
+    public function getSumCommandeParProduit()
+    {
+        return $this->createQueryBuilder('t')
+            ->select('SUM(t.quantiteCommande) as sommeQuantiteCommande, p.nom, p.id')
+            ->innerJoin('t.Produit', 'p')
+            ->groupBy('t.Produit')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

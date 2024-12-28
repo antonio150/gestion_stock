@@ -30,6 +30,9 @@ class Achat
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $time = null;
 
+    #[ORM\Column]
+    private ?int $Quantite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +94,18 @@ class Achat
     public function setTime(\DateTimeInterface $time): static
     {
         $this->time = $time;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->Quantite;
+    }
+
+    public function setQuantite(int $Quantite): static
+    {
+        $this->Quantite = $Quantite;
 
         return $this;
     }

@@ -35,6 +35,7 @@
 				<th scope="col">Quantité</th>
 				<th scope="col">Client</th>
 				<th scope="col">Produit</th>
+				<th scope="col">Date de commande</th>
 
 				<th scope="col">Action</th>
 			</tr>
@@ -46,6 +47,7 @@
 					<td>{{items['quantite_commande']}}</td>
 					<td>{{items['nomClient']}}</td>
 					<td>{{items['nomProduit']}}</td>
+					<td>{{items['date_commande']}}</td>
 
 					<td>
 						<a href="{{path('delete_commande', {id:items['id']})}}" class="btn btn-alert">Supprimer</a>

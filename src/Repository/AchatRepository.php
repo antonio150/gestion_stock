@@ -16,6 +16,26 @@ class AchatRepository extends ServiceEntityRepository
         parent::__construct($registry, Achat::class);
     }
 
+    public function getSumAchatParProduit()
+    {
+        return $this->createQueryBuilder('t')
+            ->select('SUM(t.Quantite) as sommeQuantiteAchat, p.nom, p.id')
+            ->innerJoin('t.produit', 'p')
+            ->groupBy('t.produit')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findById(int $id): ?Achat
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
 //    /**
 //     * @return Achat[] Returns an array of Achat objects
 //     */

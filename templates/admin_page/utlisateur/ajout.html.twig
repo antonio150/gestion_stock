@@ -1,4 +1,4 @@
-{% extends 'admin_page/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 
 {% block body %}
@@ -36,11 +36,11 @@
     <input type="password" id="password" name="password" value="{{ password|default('') }}">
 
     <label for="roles">Rôle</label>
-    <select id="roles" name="roles[]" >
+    {# <select id="roles" name="roles[]" >
         <option value="ROLE_USER">Utilisateur (ROLE_USER)</option>
         <option value="ROLE_ADMIN">Administrateur (ROLE_ADMIN)</option>
         <option value="ROLE_SUPER_ADMIN">Super Administrateur (ROLE_SUPER_ADMIN)</option>
-    </select>
+    </select> #}
 
     <button type="submit">Ajouter</button>
 

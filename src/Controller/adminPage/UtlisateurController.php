@@ -59,15 +59,15 @@ class UtlisateurController extends AbstractController
                 $hashedPassword = $passwordHasher->hashPassword($user, $password);
                 $user->setPassword($hashedPassword);
 
-                $allowedRoles = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
-                $roles = array_filter($data['roles'], function ($role) use ($allowedRoles) {
-                    return in_array($role, $allowedRoles, true);
-                });
+                // $allowedRoles = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'];
+                // $roles = array_filter($data['roles'], function ($role) use ($allowedRoles) {
+                //     return in_array($role, $allowedRoles, true);
+                // });
                 // Ajout des rôles
                
 
                 
-                $user->setRoles($roles);
+                $user->setRoles(['ROLE_USER']);
 
                 $entityManagerInterface->persist($user);
                 $entityManagerInterface->flush();

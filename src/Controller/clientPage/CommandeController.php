@@ -3,6 +3,7 @@
 namespace App\Controller\clientPage;
 
 use App\Entity\Commande;
+use App\Entity\Mouvement;
 use App\Entity\Stock;
 use App\Form\CommandeType;
 use App\Form\SearchCommandeFormType;
@@ -57,20 +58,25 @@ class CommandeController extends AbstractController
         $stock = new Stock();
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
+
+        $mouvement = new Mouvement();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManagerInterface->persist($commande);
             $entityManagerInterface->flush();
 
-            $qteCommandeProduit = $commande->getQuantiteCommande();
-            $produit = $commande->getProduit();
-            $idProduit = $produit->getId();
-            $stock = $stockRepository->getQuantite($idProduit);
+            $produit = $form->get('Produit')->getData();
+            $quantite = $form->get('quantiteCommande')->getData();
+            $date_commande = $form->get('date_commande')->getData();
 
-            $qteStock = intval($stock['quantite_stock']);
-            $qteCommandProd = intval($qteCommandeProduit);
-            $qte = $qteStock - $qteCommandProd;
 
-            $stockRepository->updateQuantite($idProduit, $qte);
+
+            $mouvement->setProduit($produit);
+            $mouvement->setType('sortie');
+            $mouvement->setQuantite($quantite);
+            $mouvement->setDate($date_commande);
+
+            $entityManagerInterface->persist($mouvement);
+            $entityManagerInterface->flush();
 
             return $this->redirectToRoute('app_commande');
         }
@@ -88,7 +94,7 @@ class CommandeController extends AbstractController
     public function editCommande(
         Commande $commande,
         Request $request,
-        StockRepository $stockRepository,
+       
         EntityManagerInterface $entityManagerInterface
     ): Response {
         $qteCommandeAvant = $commande->getQuantiteCommande();
@@ -101,24 +107,8 @@ class CommandeController extends AbstractController
             $qteCommandeApres = $commande->getQuantiteCommande();
             $qteCommandeApres = intval($qteCommandeApres);
             $qteCommandeAvant = intval($qteCommandeAvant);
-            $qteCommandeVerification = $qteCommandeApres - $qteCommandeAvant;
-            $produit = $commande->getProduit();
-            $idProduit = $produit->getId();
-            $stockQte = $stockRepository->getQuantite($idProduit);
-            $stockQte = intval($stockQte['quantite_stock']);
-            // dump($qteCommandeAvant);
-            // dd($qteCommandeVerification);
-            // dump($qteCommandeApres);
-            // dd($stockQte);
-            if ($qteCommandeVerification > 0) {
-                $qte = $stockQte - $qteCommandeVerification;
+           
 
-                $stockRepository->updateQuantite($idProduit, $qte);
-            } elseif ($qteCommandeVerification < 0) {
-                $qte = $stockQte - $qteCommandeVerification;
-
-                $stockRepository->updateQuantite($idProduit, $qte);
-            }
             $entityManagerInterface->persist($commande);
             $entityManagerInterface->flush();
 
@@ -139,27 +129,9 @@ class CommandeController extends AbstractController
     public function deleteCommande(
         Commande $commande,
         EntityManagerInterface $entityManagerInterface,
-        StockRepository $stockRepository
     ): Response {
-        $quantiteCommandeProduit = $commande->getQuantiteCommande();
-        $produit = $commande->getProduit();
-        $idProduit = $produit->getId();
-        $stock = $stockRepository->getQuantite($idProduit);
-        // dd($stock);
-        if ($stock) {
-            $entityManagerInterface->remove($commande);
-            $entityManagerInterface->flush();
-
-            $qteStock = intval($stock['quantite_stock']);
-            $qteCommandProd = intval($quantiteCommandeProduit);
-            $qte = $qteStock + $qteCommandProd;
-
-            $stockRepository->updateQuantite($idProduit, $qte);
-        } else {
-            $errorMessage = "Produit n'existe pas dans stock";
-            $this->addFlash('error', $errorMessage);
-        }
-
+        $entityManagerInterface->remove($commande);
+        $entityManagerInterface->flush();
         return $this->redirectToRoute('app_commande');
     }
 }
