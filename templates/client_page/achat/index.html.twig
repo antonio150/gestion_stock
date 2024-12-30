@@ -29,7 +29,7 @@
                 <td>{{ list.dateAchat|date('Y-m-d') }}</td>
                 <td>{{ list.time|date('H:i:s') }}</td>
                 <td>
-                    <a href="#" class="btn btn-alert">Supprimer</a>
+                    <a href="{{path('delete_achat', {id:list.id})}}" class="btn btn-alert">Supprimer</a>
                     <a href="{{path('edit_achat', {id:list.id})}}" class="btn btn-success">Modifier</a>
                 </td>
             </tr>

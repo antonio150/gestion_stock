@@ -23,8 +23,7 @@ class AchatController extends AbstractController
     #[Route('/achat', name: 'app_achat')]
     public function index(
         AchatRepository $achatRepository
-    ): Response
-    {
+    ): Response {
         $listAchat = $achatRepository->findAll();
 
         return $this->render('client_page/achat/index.html.twig', [
@@ -38,8 +37,7 @@ class AchatController extends AbstractController
         Request $request,
         ProduitRepository $produitRepository,
         FournisseurRepository $fournisseurRepository
-    ):Response
-    {
+    ): Response {
         $achat = new Achat();
         $form = $this->createForm(AchatType::class, $achat);
         $data = $request->request->all();
@@ -48,8 +46,7 @@ class AchatController extends AbstractController
 
         $listProduit = $produitRepository->findAll();
         $listFournisseur = $fournisseurRepository->findAll();
-        if($request->isMethod('POST'))
-        {
+        if ($request->isMethod('POST')) {
 
             // $prod = $produitRepository->find($data['produit']);
             $prod = $entityManagerInterface->getRepository(Produit::class)->find($data['produit']);
@@ -69,7 +66,7 @@ class AchatController extends AbstractController
             $mouvement->setType('entree');
             $mouvement->setQuantite($data['quantite']);
             $mouvement->setDate($dateAchat);
-           
+
             $entityManagerInterface->persist($achat);
             $entityManagerInterface->flush();
 
@@ -78,18 +75,17 @@ class AchatController extends AbstractController
 
             return $this->redirectToRoute('app_achat');
         }
-        
-       
+
+
 
         return $this->render('client_page/achat/ajout.html.twig', [
             'form' => $form->createView(),
             'listProduit' => $listProduit,
             'listFournisseur' => $listFournisseur,
         ]);
-
     }
 
-    #[Route('/achat/modification/{id}', name: 'edit_achat', methods:['GET', 'POST'])]
+    #[Route('/achat/modification/{id}', name: 'edit_achat', methods: ['GET', 'POST'])]
     public function edit(
         Achat $achat,
         Request $request,
@@ -98,23 +94,63 @@ class AchatController extends AbstractController
         AchatRepository $achatRepository,
         ProduitRepository $produitRepository,
         FournisseurRepository $fournisseurRepository
-    ):Response
-    {
+    ): Response {
         $route = [
             'id' => $achat->getId()
         ];
+
 
         $id = $route['id'];
         $achatValue = $achatRepository->findById($id);
 
         $listProduit = $produitRepository->findAll();
         $listFournisseur = $fournisseurRepository->findAll();
-        dd($achatValue['produit']);
+        // dd($achatValue);
+        if ($request->isMethod('POST')) {
+
+            $data = $request->request->all();
+
+            $produit = $data['produit'];
+            $produit = $produitRepository->find($produit);
+            $montant = $data['montant'];
+            $fournisseur = $data['fournisseur'];
+            $fournisseur = $fournisseurRepository->find($fournisseur);
+            $quantite = $data['quantite'];
+            $date_achat = $data['date_achat'];
+            $date_achat = new \DateTime($date_achat);
+            $time_achat = $data['time_achat'];
+            $time_achat = new \DateTime($time_achat);
+
+            $achat->setProduit($produit);
+            $achat->setMontant($montant);
+            $achat->setFournisseur($fournisseur);
+            $achat->setQuantite($quantite);
+            $achat->setDateAchat($date_achat);
+            $achat->setTime($time_achat);
+
+            $entityManagerInterface->persist($achat);
+            $entityManagerInterface->flush();
+
+            return $this->redirectToRoute('app_achat');
+        }
 
         return $this->render('client_page/achat/edit.html.twig', [
             'achatValue' => $achatValue,
             'listProduit' => $listProduit,
             'listFournisseur' => $listFournisseur,
+            'idAchat' => $route['id']
         ]);
+    }
+
+    #[Route('achat/delete/{id}', name: 'delete_achat')]
+    public function supprimerAchat(
+        Achat $achat,
+        EntityManagerInterface $entityManagerInterface
+    )
+    {
+        $entityManagerInterface->remove($achat);
+        $entityManagerInterface->flush();
+        return $this->redirectToRoute('app_achat');
+
     }
 }
