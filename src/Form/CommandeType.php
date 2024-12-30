@@ -27,6 +27,7 @@ class CommandeType extends AbstractType
                 'class' => Client::class,
                 'choice_label' => 'nom',
                 'required' => true,
+                'attr' => ['class' => 'form-control'],
                 'label'=> 'Nom client',
                 'placeholder' => 'Sélectionnez un client', // Ajoute une option vide
             ])
@@ -35,11 +36,13 @@ class CommandeType extends AbstractType
                 'choice_label' => 'nom',
                 'required' => true,
                 'label'=> 'Nom produit',
+                'attr' => ['class' => 'form-control'],
                 'placeholder' => 'Sélectionnez un produit',
             ])
             ->add('date_commande', DateType::class,[
                 'label' => 'Date de commande',
                 'widget' => 'single_text',
+                'attr' => ['class' => 'form-control'],
                 'format' => 'yyyy-MM-dd',
             ])
             ->add('save', SubmitType::class, [

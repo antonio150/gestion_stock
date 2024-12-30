@@ -1,47 +1,45 @@
 {% extends 'client_page/index.html.twig' %}
 
 {% block title %}Modification{% endblock %}
+
 {% block body %}
+<div>
+    <a href="{{ path('app_achat') }}" class="btn">Retour</a>
+</div>
 
-<div> <a href="{{path('app_achat')}}" class="btn"> Retour </a> </div>
-
-
-<form action="/achat/modification/{{idAchat}}" method="POST">
-
+<form action="/achat/modification/{{ idAchat }}" method="POST" class="form-container">
     <label for="produit">Produit :</label>
-    <select id="produit" name="produit" >
-        <option value=""> Choisir produit </option>
+    <select id="produit" name="produit" class="form-control">
+        <option value="">Choisir produit</option>
         {% for listProd in listProduit %}
-            <option value="{{listProd.id}}" {% if listProd.id == achatValue.produit.id %} selected {% endif %} > {{listProd.nom}} </option>
+            <option value="{{ listProd.id }}" {% if listProd.id == achatValue.produit.id %} selected {% endif %}>
+                {{ listProd.nom }}
+            </option>
         {% endfor %}
     </select><br>
 
-  
     <label for="montant">Montant :</label>
-    <input type="number" id="montant" name="montant" value="{{achatValue.montant}}" required><br><br>
+    <input type="number" id="montant" name="montant" value="{{ achatValue.montant }}" class="form-control" required><br>
 
-   
     <label for="fournisseur">Fournisseur :</label>
-    <select id="fournisseur" name="fournisseur" >
-        <option value=""> Choisir fournisseur </option>
+    <select id="fournisseur" name="fournisseur" class="form-control">
+        <option value="">Choisir fournisseur</option>
         {% for listFourniss in listFournisseur %}
-            <option value="{{listFourniss.id}}" {% if listFourniss.id == achatValue.fournisseur.id %} selected {% endif %}> {{listFourniss.nom}} </option>
+            <option value="{{ listFourniss.id }}" {% if listFourniss.id == achatValue.fournisseur.id %} selected {% endif %}>
+                {{ listFourniss.nom }}
+            </option>
         {% endfor %}
     </select><br>
 
-    <label for="quantite">Quantite :</label>
-    <input type='number' id="quantite" name="quantite" value="{{achatValue.Quantite}}" /><br><br>
+    <label for="quantite">Quantité :</label>
+    <input type="number" id="quantite" name="quantite" value="{{ achatValue.Quantite }}" class="form-control"><br>
 
-   
     <label for="date_achat">Date achat :</label>
-    <input type='date' id="date_achat" name="date_achat" value="{{achatValue.DateAchat|date('Y-m-d')}}"  /><br><br>
+    <input type="date" id="date_achat" name="date_achat" value="{{ achatValue.DateAchat|date('Y-m-d') }}" class="form-control"><br>
 
     <label for="time_achat">Heure achat :</label>
-    <input type='time' id="time_achat" name="time_achat" value="{{achatValue.time|date('H:i:s')}}" /><br><br>
+    <input type="time" id="time_achat" name="time_achat" value="{{ achatValue.time|date('H:i:s') }}" class="form-control"><br>
 
-    <!-- Bouton d'envoi -->
-    <button type="submit">Envoyer</button>
-  </form>
-
-
+    <button type="submit" class="btn btn-submit">Envoyer</button>
+</form>
 {% endblock %}

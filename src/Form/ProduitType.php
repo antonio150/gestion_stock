@@ -36,7 +36,9 @@ class ProduitType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'required' => 'required', // Forcer l'attribut HTML
+                    'class' => 'form-control'
                 ],
+                
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary'],

@@ -3,3 +3,12 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+pdf_generate:
+    path: /generate-pdf
+    controller: App\Controller\PDFController::generatePdf
+
+pdf_achat:
+    path: /generate-clients-pdf
+    controller: App\Controller\PDFController::generateAchatPdf
+
