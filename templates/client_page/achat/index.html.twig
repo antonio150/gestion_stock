@@ -18,6 +18,7 @@
         <thead>
             <tr>
                 <th scope="col">Produit</th>
+                <th scope="col">Quantite</th>
                 <th scope="col">Montant</th>
                 <th scope="col">Fournisseur</th>
                 <th scope="col">Date</th>
@@ -29,6 +30,7 @@
         {% for list in listeAchat %}
             <tr>
                 <td>{{ list.produit }}</td>
+                <td>{{ list.Quantite }}</td>
                 <td>{{ list.montant }}</td>
                 <td>{{ list.fournisseur }}</td>
                 <td>{{ list.dateAchat|date('Y-m-d') }}</td>

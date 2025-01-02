@@ -143,29 +143,6 @@ class AchatController extends AbstractController
         ]);
     }
 
-    #[Route('/achat/export', name: 'pdf_generate', methods: ['GET', 'POST'])]
-    public function generatePdf(FPDFService $fpdfService): Response
-    {
-        // Initialiser le PDF
-        $fpdfService->AddPage();
-        $fpdfService->SetFont('Arial', 'B', 16);
-
-        // Ajouter du contenu
-        $fpdfService->Cell(40, 10, 'Bonjour, voici un PDF généré avec FPDF !');
-
-        // Générer le contenu du PDF en mémoire
-        $output = $fpdfService->Output('S'); // 'S' retourne le contenu en chaîne
-
-        // Retourner une réponse HTTP avec le PDF
-        return new Response(
-            $output,
-            200,
-            [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="document.pdf"',
-            ]
-        );
-    }
 
     #[Route('achat/delete/{id}', name: 'delete_achat')]
     public function supprimerAchat(

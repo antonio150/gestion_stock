@@ -8,8 +8,12 @@
 	<div>
 		<a class="btn btn-primary" href="{{path('app_stock')}}">Retour stock</a>
 	</div>
-
-	
+<div>
+    <a href="{{ path('pdf_stock') }}" class="btn btn-primary" target="_blank">
+        Télécharger le PDF
+    </a>
+</div>
+	{# {% dump(listeStock) %} #}
 	<table class="table">
 		<thead>
 			<tr>
@@ -23,8 +27,8 @@
 			{% for items in listeStock %}
 				<tr>
 
-					<td>{{items[0]}}</td>
-					<td>{{items[1]}}</td>
+					<td>{{items["nom"]}}</td>
+					<td>{{items["stockDisponible"]}}</td>
 
 					
 

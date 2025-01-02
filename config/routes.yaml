@@ -9,6 +9,26 @@ pdf_generate:
     controller: App\Controller\PDFController::generatePdf
 
 pdf_achat:
-    path: /generate-clients-pdf
+    path: /generate-achat-pdf
     controller: App\Controller\PDFController::generateAchatPdf
+
+pdf_commande:
+    path: /generate-commande-pdf
+    controller: App\Controller\PDFController::generateCommandePdf
+
+pdf_produit:
+    path: /generate-produit-pdf
+    controller: App\Controller\PDFController::generateProduitPdf
+
+pdf_fournisseur:
+    path: /generate-fournisseur-pdf
+    controller: App\Controller\PDFController::generateFournisseurPdf
+
+pdf_stock:
+    path: /generate-stock-pdf
+    controller: App\Controller\PDFController::generateStockPdf
+
+pdf_client:
+    path: /generate-client-pdf
+    controller: App\Controller\PDFController::generateClientPdf
 

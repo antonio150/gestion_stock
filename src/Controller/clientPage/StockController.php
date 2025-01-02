@@ -25,37 +25,56 @@ class StockController extends AbstractController
        
         $listeSumAchat = $achatRepository->getSumAchatParProduit();
         $listeSumCommande= $commandeRepository->getSumCommandeParProduit();
-        // echo "<pre>";
-        // var_dump($listeSumAchat);
-        // var_dump($listeSumCommande);
-        // echo "</pre>";
+        
+        // Données initiales
+        $achats = $listeSumAchat; // Peut être vide
+        $commandes = $listeSumCommande;
 
+        // Fusionner les IDs des achats et des commandes
+        $produits = [];
 
-        $listeStock = [];
-        $quantiteAchat = 0;
-        foreach ($listeSumAchat as $listAchat)
-        {
-            $quantiteAchetee = (int) $listAchat["sommeQuantiteAchat"];
-            $quantiteCommande = 0;
-            foreach($listeSumCommande as $listCommande)
-            {
-                if($listAchat['id'] == $listCommande['id'])
-                {
-                    $quantiteCommande = $listCommande['sommeQuantiteCommande'];
-                  break;
-                }
-            }
-
-            $stock =  $quantiteAchetee - $quantiteCommande ;
-                  
-            $arrayStock = [$listAchat['nom'], $stock];
-            array_push($listeStock, $arrayStock);
+        // Ajouter les produits des achats
+        foreach ($achats as $achat) {
+            $produits[$achat["id"]] = [
+                "nom" => $achat["nom"],
+                "id" => $achat["id"],
+                "quantiteAchetee" => (int) $achat["sommeQuantiteAchat"],
+                "quantiteCommandee" => 0
+            ];
         }
+
+        // Ajouter ou mettre à jour les produits à partir des commandes
+        foreach ($commandes as $commande) {
+            $id = $commande["id"];
+            if (!isset($produits[$id])) {
+                // Produit n'existe pas dans les achats, donc l'ajouter
+                $produits[$id] = [
+                    "nom" => $commande["nom"],
+                    "id" => $id,
+                    "quantiteAchetee" => 0, // Pas d'achat pour ce produit
+                    "quantiteCommandee" => (int) $commande["sommeQuantiteCommande"]
+                ];
+            } else {
+                // Produit existe déjà, mettre à jour la quantité commandée
+                $produits[$id]["quantiteCommandee"] = (int) $commande["sommeQuantiteCommande"];
+            }
+        }
+
+        // Calcul du stock disponible pour chaque produit
+        $stock = [];
+        foreach ($produits as $produit) {
+            $stock[] = [
+                "nom" => $produit["nom"],
+                "id" => $produit["id"],
+                "stockDisponible" => $produit["quantiteAchetee"] - $produit["quantiteCommandee"]
+            ];
+        }
+
 
       
 
         return $this->render('client_page/stock/index.html.twig', [
-            "listeStock" => $listeStock
+            "listeStock" => $stock
         ]);
     }
 
