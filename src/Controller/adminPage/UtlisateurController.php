@@ -54,7 +54,7 @@ class UtlisateurController extends AbstractController
             if (empty($errors)) {
                 $user = new User();
                 $user->setUsername($username);
-                // $user->setRoles($roles);
+                $user->setRoles(["ROLE_USER"]);
                 // Hachage du mot de passe
                 $hashedPassword = $passwordHasher->hashPassword($user, $password);
                 $user->setPassword($hashedPassword);

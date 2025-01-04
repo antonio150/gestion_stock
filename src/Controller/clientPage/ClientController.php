@@ -53,6 +53,8 @@ class ClientController extends AbstractController
         ): Response {
             $client = new Client();
             $form = $this->createForm(ClientType::class, $client);
+
+            $this->denyAccessUnlessGranted('VIEW', $client);
             $errorMessages = [];
             $form->handleRequest($request);
             $errors = null;

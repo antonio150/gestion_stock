@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FournisseurController extends AbstractController
@@ -47,9 +48,17 @@ class FournisseurController extends AbstractController
     public function addFournisseur(
         Request $request,
         EntityManagerInterface $entityManagerInterface,
-        ValidatorInterface $validatorInterface
+        ValidatorInterface $validatorInterface,
+        TokenInterface $token
     ): Response {
+
+
         $fournisseur = new Fournisseur();
+        $user = $token->getUser();
+       
+        $this->denyAccessUnlessGranted('VIEW', $fournisseur);
+
+
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
         $errors = null;
